@@ -1,0 +1,37 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "targets": {
+                    "edge": "17",
+                    "firefox": "60",
+                    "chrome": "67",
+                    "safari": "11.1"
+                },
+                // "modules": false,                          // development模式下的tree shaking 不生效，方便调试
+                "useBuiltIns": "usage",                       // 按需引入polyfill, 默认 false, 可选 entry , usage,
+                "corejs": "3.6.5"
+            }
+        ],
+        "@babel/preset-react",
+        "@babel/preset-typescript"
+    ],
+    "plugins": [
+        [
+            "@babel/plugin-transform-runtime",              // disables automatic per-file runtime injection in Babel, insdead making all helper references use it
+            {
+                "regenerator": false,                         // 通过 preset-env 已经使用了全局的 regeneratorRuntime, 不再需要 transform-runtime 提供的 不污染全局的 regeneratorRuntime
+                "useESModules": true                          // 使用 es modules helpers, 减少 commonJS 语法代码
+            }
+        ], [
+            "import",
+            {
+                "libraryName": "antd-mobile",
+                "style": true                                 // `style: true` 会加载 less 文件
+            }
+        ]
+    ]
+    // "cacheDirectory": true                           // Default false. When set, the given directory will be used to cache the results of the loader. Future webpack builds will attempt to read from the cache to avoid needing to run the potentially expensive Babel recompilation process on each run.
+  }
+  
