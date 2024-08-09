@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>移动端全栈脚手架</title>
+    </head>
+
+    <body>
+        <div id="app"></div>
+    </body>
+</html>
+
+<script src="https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js"></script>
+<script>
+    // 移动端日志查看
+    new VConsole();
+
+    // 适配
+    const fontBaseSize = 16;
+    const setSize = () => {
+        const clientWidth = document.documentElement.clientWidth;
+        document.documentElement.style.fontSize = fontBaseSize * clientWidth / 1280 + 'px';
+    }
+    setSize();
+    window.onresize = setSize;
+
+    // 打包版本
+    window.buildVersion = "<%= htmlWebpackPlugin.options.buildPkg %>";
+</script>
