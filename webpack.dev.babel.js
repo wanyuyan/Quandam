@@ -1,16 +1,14 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
+import ESLintPlugin from 'eslint-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { antTheme } from './package.json';
 
 export default (arg1, arg2) => {
-    const buildEnv = arg2['DEPLOY_ENV'];
-
     return ({
         mode: 'development',
-        entry: './src/entry.jsx',
+        entry: './src/app.jsx',
         output: {
             filename: '[name].[hash:8].file.js',
             chunkFilename: '[name].[contenthash:8].chunk.js',
@@ -19,13 +17,11 @@ export default (arg1, arg2) => {
         },
         devtool: 'inline-source-map',
         devServer: {
-            contentBase: './dist',
-            https: true,
+            // contentBase: './dist',
+            // https: true,
             host: 'localhost',
             port: 9000,
-            hot: true,
             historyApiFallback: true,
-            overlay: true,  // 代码出错弹出浮层
         },
         module: {
             rules: [
@@ -35,17 +31,6 @@ export default (arg1, arg2) => {
                     use: {
                         loader: 'babel-loader'
                     }
-                },
-                // eslint, 用于自测，自测时打开
-                {
-                    test: /\.m?jsx|js$/,
-                    loader: 'eslint-loader',
-                    enforce: 'pre',
-                    include: [path.resolve(__dirname, 'src')],
-                    exclude: [
-                        path.resolve(__dirname, 'src/router/routes.js'),
-                        path.resolve(__dirname, 'src/widgets/index.jsx'),
-                    ]
                 },
                 {
                     test: /\.less$/,
@@ -130,21 +115,21 @@ export default (arg1, arg2) => {
                 }
             ],
         },
-        optimization: {
-            namedModules: true,
-            runtimeChunk: {
-                name: 'runtime'
-            },
-            splitChunks: {
-                cacheGroups: {
-                    vendor: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: 'vendors',
-                        chunks: 'all'
-                    }
-                }
-            }
-        },
+        // optimization: {
+        //     namedModules: true,
+        //     runtimeChunk: {
+        //         name: 'runtime'
+        //     },
+        //     splitChunks: {
+        //         cacheGroups: {
+        //             vendor: {
+        //                 test: /[\\/]node_modules[\\/]/,
+        //                 name: 'vendors',
+        //                 chunks: 'all'
+        //             }
+        //         }
+        //     }
+        // },
         resolve: {
             extensions: ['.js', '.jsx', '.scss', '.css'],
             alias: {
@@ -163,17 +148,12 @@ export default (arg1, arg2) => {
                 filename: 'index.html',
                 title: 'HotChpotch',
             }),
-            new CopyWebpackPlugin([
-                {
-                    from: path.resolve(__dirname, './public/lib'), // 不打包直接输出的文件
-                    to: 'public/lib', // 打包后静态文件放置位置
-                    ignore: ['.*'] // 忽略规则。（这种写法表示将该文件夹下的所有文件都复制）
-                }
-            ]),
             new webpack.HotModuleReplacementPlugin(),
+            new ESLintPlugin({
+                context: path.resolve(__dirname, 'src')
+            }),
             new webpack.DefinePlugin({
-                ENV: JSON.stringify('dev'),
-                DEPLOY_ENV: JSON.stringify(buildEnv)
+                ENV: JSON.stringify('dev')
             })
         ]
     });

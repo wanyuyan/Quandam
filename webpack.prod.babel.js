@@ -28,7 +28,7 @@ module.exports = (arg1, arg2) => {
 
     return ({
         mode: 'production',
-        entry: './src/entry.jsx',
+        entry: './src/app.jsx',
         output: {
             filename: 'static/js/[name].[hash:8].js',
             chunkFilename: 'static/js/[name].[contenthash:8].js',
@@ -145,11 +145,6 @@ module.exports = (arg1, arg2) => {
                     };
                 },
             }),
-            new CopyWebpackPlugin([{
-                from: path.resolve(__dirname, './public/lib'), // 不打包直接输出的文件
-                to: 'public/lib', // 打包后静态文件放置位置
-                ignore: ['.*']    // 忽略规则。（这种写法表示将该文件夹下的所有文件都复制）
-            }]),
             new webpack.DefinePlugin({
                 ENV: JSON.stringify('prod'),
                 // DEPLOY_ENV: JSON.stringify(deployEnv)
