@@ -4,10 +4,9 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import {CleanWebpackPlugin} from 'clean-webpack-plugin';
 import ManifestPlugin from 'webpack-manifest-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-import { antTheme } from './package.json';
+import {antTheme} from './package.json';
 
 // const PurifyCSSPlugin = require('purifycss-webpack');
 // const glob = require('glob');
@@ -18,8 +17,7 @@ module.exports = (arg1, arg2) => {
     // const deployEnv = arg2['DEPLOY_ENV'];
 
     const date = new Date();
-    const time =
-        date.getFullYear().toString()
+    const time = date.getFullYear().toString()
         + (date.getMonth() + 1).toString()
         + date.getDate().toString()
         + date.getHours().toString()
@@ -33,7 +31,7 @@ module.exports = (arg1, arg2) => {
             filename: 'static/js/[name].[hash:8].js',
             chunkFilename: 'static/js/[name].[contenthash:8].js',
             path: path.resolve(__dirname, buildPkg),
-            publicPath: publicPath,
+            publicPath: publicPath
         },
         devtool: 'source-map',
         module: {
@@ -64,7 +62,7 @@ module.exports = (arg1, arg2) => {
                                 modifyVars: antTheme,
                                 javascriptEnabled: true
                             }
-                        },
+                        }
                     ]
                 },
                 {
@@ -89,7 +87,7 @@ module.exports = (arg1, arg2) => {
                                 name: '[path][name].[hash:7].[ext]',
                                 limit: 6000
                             }
-                        },
+                        }
                     ]
                 },
                 {
@@ -109,7 +107,7 @@ module.exports = (arg1, arg2) => {
                         }
                     }
                 }
-            ],
+            ]
         },
         plugins: [
             new CleanWebpackPlugin(),
@@ -141,12 +139,12 @@ module.exports = (arg1, arg2) => {
                         return manifest;
                     }, seed);
                     return {
-                        files: manifestFiles,
+                        files: manifestFiles
                     };
-                },
+                }
             }),
             new webpack.DefinePlugin({
-                ENV: JSON.stringify('prod'),
+                ENV: JSON.stringify('prod')
                 // DEPLOY_ENV: JSON.stringify(deployEnv)
             })
         ],

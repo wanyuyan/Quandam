@@ -2,10 +2,11 @@ import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import { antTheme } from './package.json';
+import {CleanWebpackPlugin} from 'clean-webpack-plugin';
+import {antTheme} from './package.json';
 
-export default (arg1, arg2) => {
+
+module.exports = (arg1, arg2) => {
     return ({
         mode: 'development',
         entry: './src/app.jsx',
@@ -13,7 +14,7 @@ export default (arg1, arg2) => {
             filename: '[name].[hash:8].file.js',
             chunkFilename: '[name].[contenthash:8].chunk.js',
             path: path.resolve(__dirname, 'dist'),
-            publicPath: '/',
+            publicPath: '/'
         },
         devtool: 'inline-source-map',
         devServer: {
@@ -21,7 +22,7 @@ export default (arg1, arg2) => {
             // https: true,
             host: 'localhost',
             port: 9000,
-            historyApiFallback: true,
+            historyApiFallback: true
         },
         module: {
             rules: [
@@ -45,17 +46,17 @@ export default (arg1, arg2) => {
                                 modifyVars: antTheme,
                                 javascriptEnabled: true
                             }
-                        },
+                        }
                     ]
                 },
                 {
                     test: /\.css$/,
-                    include: [/public/, /node_modules/,],
+                    include: [/public/, /node_modules/],
                     exclude: /src/,
                     use: [
-                        { loader: 'style-loader' },
-                        { loader: 'css-loader' },
-                        { loader: 'postcss-loader' }
+                        {loader: 'style-loader'},
+                        {loader: 'css-loader'},
+                        {loader: 'postcss-loader'}
                     ]
                 },
                 {
@@ -113,7 +114,7 @@ export default (arg1, arg2) => {
                         }
                     }
                 }
-            ],
+            ]
         },
         // optimization: {
         //     namedModules: true,
@@ -146,7 +147,7 @@ export default (arg1, arg2) => {
             new HtmlWebpackPlugin({
                 template: 'src/index.html',
                 filename: 'index.html',
-                title: 'HotChpotch',
+                title: 'HotChpotch'
             }),
             new webpack.HotModuleReplacementPlugin(),
             new ESLintPlugin({
