@@ -9,7 +9,7 @@ import {antTheme} from './package.json';
 module.exports = (arg1, arg2) => {
     return ({
         mode: 'development',
-        entry: './src/app.jsx',
+        entry: './src/app.tsx',
         output: {
             filename: '[name].[hash:8].file.js',
             chunkFilename: '[name].[contenthash:8].chunk.js',
@@ -27,7 +27,7 @@ module.exports = (arg1, arg2) => {
         module: {
             rules: [
                 {
-                    test: /\.m?jsx|js$/,
+                    test: /\.m?tsx|js$/,
                     exclude: /(node_modules|bower_components)/,
                     use: {
                         loader: 'babel-loader'

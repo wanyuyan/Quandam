@@ -26,7 +26,7 @@ module.exports = (arg1, arg2) => {
 
     return ({
         mode: 'production',
-        entry: './src/app.jsx',
+        entry: './src/app.tsx',
         output: {
             filename: 'static/js/[name].[hash:8].js',
             chunkFilename: 'static/js/[name].[contenthash:8].js',
@@ -37,7 +37,7 @@ module.exports = (arg1, arg2) => {
         module: {
             rules: [
                 {
-                    test: /\.m?jsx|js$/,
+                    test: /\.m?tsx|js$/,
                     exclude: /(node_modules|bower_components)/,
                     use: {
                         loader: 'babel-loader'
